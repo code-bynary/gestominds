@@ -19,8 +19,10 @@
     - [x] JWT + Refresh Token logic
     - [x] Backend Auth Middleware
     - [x] Frontend Auth Context & Private Routes
-- [ ] Core Features (Phase 1) [ ]
-    - [ ] Accounts management
+- [x] Core Features (Phase 1) [x]
+    - [x] Accounts management (Backend & Frontend)
+        - [x] Backend CRUD implementation
+        - [x] Frontend UI (listing and form)
     - [ ] Categories management (hierarchical)
     - [ ] Transactions (Manual entries, transfers)
     - [ ] Balance calculation logic

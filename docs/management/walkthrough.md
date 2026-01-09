@@ -39,6 +39,15 @@ gestor-minds/
   - `LoginPage` & `SignupPage`: Interfaces premium conectadas à API real.
   - `PrivateRoutes`: Proteção robusta das rotas internas.
 
+### 4. Gestão de Contas Bancárias (CRUD) - COMPLETO
+- **Backend**:
+  - `AccountRepository`: Implementação de isolamento rigoroso por `tenantId`.
+  - Endpoints de listagem, criação e exclusão protegidos por JWT.
+- **Frontend**:
+  - `AccountsPage`: Interface moderna para visualização de contas.
+  - Modal de criação de conta com seleção de tipo (Corrente, Poupança, etc.).
+  - Integração visual com o layout mestre e sidebar.
+
 ## Repositório Live
 - **Git** atualizado: `https://github.com/code-bynary/gestominds`
 
