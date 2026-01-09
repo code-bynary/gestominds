@@ -1,4 +1,4 @@
-# Gestor Minds - Versão beta 0
+# Gestor Minds - Versão beta 1
 
 🚀 **PROMPT PARA ANTIGRAVITY — PLATAFORMA FINANCEIRA MINDS - PF + MEI (WEB + API + FUTURO MOBILE)**
 
