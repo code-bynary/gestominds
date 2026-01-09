@@ -99,6 +99,12 @@ gestor-minds/
 - **Interface de Download**: Botões de exportação integrados diretamente na barra de ferramentas da tela de Lançamentos.
 - **Filtros Automatizados**: A exportação respeita o contexto multi-tenant do usuário logado.
 
+### 11. Centros de Custo (Projetos/Departamentos) - COMPLETO
+- **Gestão de Centros de Custo**: Tela dedicada para cadastrar projetos, departamentos ou unidades de negócio.
+- **Isolamento de Tenant**: Cada empresa/usuário gerencia seus próprios centros de custo de forma independente.
+- **Integração com Lançamentos**: Agora é possível vincular uma despesa ou receita a um centro de custo específico.
+- **Organização Financeira**: Facilita a análise de quais projetos estão gerando mais custo ou receita.
+
 ## Repositório Live
 - **Git** atualizado: `https://github.com/code-bynary/gestominds`
 

@@ -18,12 +18,14 @@ interface Transaction {
 interface Account { id: string; name: string }
 interface Category { id: string; name: string }
 interface Person { id: string; name: string }
+interface CostCenter { id: string; name: string }
 
 const TransactionsPage: React.FC = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [accounts, setAccounts] = useState<Account[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [people, setPeople] = useState<Person[]>([]);
+    const [costCenters, setCostCenters] = useState<CostCenter[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -36,7 +38,8 @@ const TransactionsPage: React.FC = () => {
         status: 'CONFIRMED',
         accountId: '',
         categoryId: '',
-        personId: ''
+        personId: '',
+        costCenterId: ''
     });
 
     const [transferData, setTransferData] = useState({
@@ -53,15 +56,17 @@ const TransactionsPage: React.FC = () => {
 
     const fetchData = async () => {
         try {
-            const [transRes, accRes, catRes, peopleRes] = await Promise.all([
+            const [transRes, accRes, catRes, peopleRes, ccRes] = await Promise.all([
                 api.get('/transactions'),
                 api.get('/accounts'),
                 api.get('/categories'),
-                api.get('/people')
+                api.get('/people'),
+                api.get('/cost-centers')
             ]);
             setTransactions(transRes.data);
             setAccounts(accRes.data);
             setPeople(peopleRes.data);
+            setCostCenters(ccRes.data);
             // Flatten categories for the select input
             const flatCats: Category[] = [];
             const flatten = (items: any[]) => {
@@ -96,7 +101,8 @@ const TransactionsPage: React.FC = () => {
                 status: 'CONFIRMED',
                 accountId: '',
                 categoryId: '',
-                personId: ''
+                personId: '',
+                costCenterId: ''
             });
             fetchData();
         } catch (err) {
@@ -329,19 +335,32 @@ const TransactionsPage: React.FC = () => {
                                     </div>
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium mb-1">Pessoa / Contato (Opcional)</label>
-                                    <select
-                                        value={formData.personId}
-                                        onChange={(e) => setFormData({ ...formData, personId: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-transparent outline-none focus:ring-2 focus:ring-primary-500"
-                                    >
-                                        <option value="">Nenhum...</option>
-                                        {people.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
-                                    </select>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1">Pessoa / Contato (Opcional)</label>
+                                        <select
+                                            value={formData.personId}
+                                            onChange={(e) => setFormData({ ...formData, personId: e.target.value })}
+                                            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-transparent outline-none focus:ring-2 focus:ring-primary-500"
+                                        >
+                                            <option value="">Nenhum...</option>
+                                            {people.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1">Centro de Custo (Opcional)</label>
+                                        <select
+                                            value={formData.costCenterId}
+                                            onChange={(e) => setFormData({ ...formData, costCenterId: e.target.value })}
+                                            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-transparent outline-none focus:ring-2 focus:ring-primary-500"
+                                        >
+                                            <option value="">Nenhum...</option>
+                                            {costCenters.map(cc => <option key={cc.id} value={cc.id}>{cc.name}</option>)}
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div className="flex space-x-4 pt-6">
+                                <div className="flex space-x-4 pt-4">
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}

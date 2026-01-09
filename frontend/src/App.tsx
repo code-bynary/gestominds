@@ -6,6 +6,7 @@ import AccountsPage from './pages/Accounts';
 import CategoriesPage from './pages/Categories';
 import TransactionsPage from './pages/Transactions';
 import PeoplePage from './pages/People';
+import CostCentersPage from './pages/CostCenters';
 import DashboardPage from './pages/Dashboard';
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/categories" element={<PrivateRoute><CategoriesPage /></PrivateRoute>} />
           <Route path="/transactions" element={<PrivateRoute><TransactionsPage /></PrivateRoute>} />
           <Route path="/people" element={<PrivateRoute><PeoplePage /></PrivateRoute>} />
+          <Route path="/cost-centers" element={<PrivateRoute><CostCentersPage /></PrivateRoute>} />
           <Route path="/" element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

@@ -44,6 +44,10 @@
     - [x] Backend Excel generation logic (xlsx)
     - [x] Backend PDF generation logic (pdfmake/jspdf)
     - [x] Frontend export interface (Download buttons)
+- [x] Cost Centers [x]
+    - [x] Backend CRUD for Cost Centers
+    - [x] Frontend management UI (listing and form)
+    - [x] Integration with Transactions form
 - [ ] Initial UI Implementation [x]
     - [x] Basic Layout and Navigation
     - [x] Account and Category listings

@@ -10,6 +10,7 @@ import dashboardRoutes from './routes/dashboard.routes';
 import personRoutes from './routes/person.routes';
 import reportRoutes from './routes/report.routes';
 import transferRoutes from './routes/transfer.routes';
+import costCenterRoutes from './routes/cost-center.routes';
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use('/transactions', transactionRoutes);
 app.use('/reports', reportRoutes);
 app.use('/people', personRoutes);
 app.use('/transfers', transferRoutes);
+app.use('/cost-centers', costCenterRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
