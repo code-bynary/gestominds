@@ -1,6 +1,9 @@
-import Layout from './components/Layout'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import LoginPage from './pages/Login';
+import Layout from './components/Layout';
 
-function App() {
+function Dashboard() {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto">
@@ -26,7 +29,7 @@ function App() {
         </div>
       </div>
     </Layout>
-  )
+  );
 }
 
 const Card = ({ title, value, trend, positive, icon }: any) => (
@@ -42,7 +45,7 @@ const Card = ({ title, value, trend, positive, icon }: any) => (
     <h3 className="text-slate-500 text-sm font-medium">{title}</h3>
     <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">{value}</p>
   </div>
-)
+);
 
 const TransactionItem = ({ title, category, amount, date, positive }: any) => (
   <div className="flex items-center justify-between py-4 border-b border-slate-100 dark:border-slate-800 last:border-0">
@@ -60,6 +63,27 @@ const TransactionItem = ({ title, category, amount, date, positive }: any) => (
       <p className="text-xs text-slate-400">{date}</p>
     </div>
   </div>
-)
+);
 
-export default App
+const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated } = useAuth();
+  // For demo purposes, we will treat it as authenticated if "user" exists in localStorage
+  const isDemoAuth = localStorage.getItem('user') !== null;
+  return isDemoAuth || isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
+}
+
+export default App;
