@@ -5,6 +5,7 @@ import SignupPage from './pages/Signup';
 import AccountsPage from './pages/Accounts';
 import CategoriesPage from './pages/Categories';
 import TransactionsPage from './pages/Transactions';
+import PeoplePage from './pages/People';
 import Layout from './components/Layout';
 
 function Dashboard() {
@@ -86,6 +87,7 @@ function App() {
           <Route path="/accounts" element={<PrivateRoute><AccountsPage /></PrivateRoute>} />
           <Route path="/categories" element={<PrivateRoute><CategoriesPage /></PrivateRoute>} />
           <Route path="/transactions" element={<PrivateRoute><TransactionsPage /></PrivateRoute>} />
+          <Route path="/people" element={<PrivateRoute><PeoplePage /></PrivateRoute>} />
           <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

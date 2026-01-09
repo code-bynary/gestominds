@@ -30,6 +30,9 @@
         - [x] Backend CRUD with persistence and status (Pending/Confirmed)
         - [x] Frontend transaction listing
         - [x] Quick transaction creation form
+    - [x] People management (Clients & Suppliers) [x]
+        - [x] Backend CRUD for People
+        - [x] Frontend management UI
     - [ ] Balance calculation logic
 - [ ] Initial UI Implementation [ ]
     - [ ] Basic Layout and Navigation

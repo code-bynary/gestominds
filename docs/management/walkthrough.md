@@ -67,6 +67,15 @@ gestor-minds/
   - Formulário unificado para Receitas e Despesas.
   - Integração com Contas e Categorias reais.
 
+### 7. Gestão de Pessoas (Clientes & Fornecedores) - COMPLETO
+- **Backend**:
+  - `PersonRepository`: Cadastro de pessoas com isolamento por tenant.
+  - Endpoints para criar, listar e editar contatos.
+- **Frontend**:
+  - `PeoplePage`: Galeria de cartões para visualização rápida de contatos.
+  - **Integração**: Transações agora podem ser vinculadas a uma pessoa da lista.
+  - Navegação lateral ativada.
+
 ## Repositório Live
 - **Git** atualizado: `https://github.com/code-bynary/gestominds`
 

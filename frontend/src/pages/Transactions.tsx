@@ -1,3 +1,4 @@
+```typescript
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import Layout from '../components/Layout';
@@ -11,15 +12,18 @@ interface Transaction {
     status: 'PENDING' | 'CONFIRMED';
     account: { name: string };
     category: { name: string };
+    person?: { name: string };
 }
 
 interface Account { id: string; name: string }
 interface Category { id: string; name: string }
+interface Person { id: string; name: string }
 
 const TransactionsPage: React.FC = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [accounts, setAccounts] = useState<Account[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
+    const [people, setPeople] = useState<Person[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
 
@@ -30,7 +34,8 @@ const TransactionsPage: React.FC = () => {
         type: 'EXPENSE',
         status: 'CONFIRMED',
         accountId: '',
-        categoryId: ''
+        categoryId: '',
+        personId: ''
     });
 
     useEffect(() => {
@@ -39,13 +44,15 @@ const TransactionsPage: React.FC = () => {
 
     const fetchData = async () => {
         try {
-            const [transRes, accRes, catRes] = await Promise.all([
+            const [transRes, accRes, catRes, peopleRes] = await Promise.all([
                 api.get('/transactions'),
                 api.get('/accounts'),
-                api.get('/categories')
+                api.get('/categories'),
+                api.get('/people')
             ]);
             setTransactions(transRes.data);
             setAccounts(accRes.data);
+            setPeople(peopleRes.data);
             // Flatten categories for the select input
             const flatCats: Category[] = [];
             const flatten = (items: any[]) => {
@@ -68,7 +75,8 @@ const TransactionsPage: React.FC = () => {
         try {
             await api.post('/transactions', {
                 ...formData,
-                amount: Number(formData.amount)
+                amount: Number(formData.amount),
+                personId: formData.personId || undefined
             });
             setIsModalOpen(false);
             setFormData({
@@ -78,7 +86,8 @@ const TransactionsPage: React.FC = () => {
                 type: 'EXPENSE',
                 status: 'CONFIRMED',
                 accountId: '',
-                categoryId: ''
+                categoryId: '',
+                personId: ''
             });
             fetchData();
         } catch (err) {
@@ -117,7 +126,7 @@ const TransactionsPage: React.FC = () => {
                                 <thead>
                                     <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
                                         <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Data</th>
-                                        <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Descrição</th>
+                                        <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Descrição / Pessoa</th>
                                         <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Categoria</th>
                                         <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Conta</th>
                                         <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-right">Valor</th>
@@ -130,8 +139,9 @@ const TransactionsPage: React.FC = () => {
                                             <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
                                                 {new Date(t.date).toLocaleDateString('pt-BR')}
                                             </td>
-                                            <td className="px-6 py-4 text-sm font-semibold text-slate-900 dark:text-white">
-                                                {t.description}
+                                            <td className="px-6 py-4">
+                                                <p className="text-sm font-semibold text-slate-900 dark:text-white">{t.description}</p>
+                                                {t.person && <p className="text-[10px] text-slate-400 uppercase font-bold">{t.person.name}</p>}
                                             </td>
                                             <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
                                                 {t.category.name}
@@ -139,11 +149,11 @@ const TransactionsPage: React.FC = () => {
                                             <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
                                                 {t.account.name}
                                             </td>
-                                            <td className={`px-6 py-4 text-sm font-bold text-right ${t.type === 'INCOME' ? 'text-emerald-500' : 'text-rose-500'}`}>
+                                            <td className={`px - 6 py - 4 text - sm font - bold text - right ${ t.type === 'INCOME' ? 'text-emerald-500' : 'text-rose-500' } `}>
                                                 {t.type === 'INCOME' ? '+' : '-'} {formatCurrency(t.amount)}
                                             </td>
                                             <td className="px-6 py-4 text-center">
-                                                <span className={`px-3 py-1 text-[10px] font-bold rounded-full uppercase ${t.status === 'CONFIRMED' ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20' : 'bg-amber-100 text-amber-600 dark:bg-amber-900/20'}`}>
+                                                <span className={`px - 3 py - 1 text - [10px] font - bold rounded - full uppercase ${ t.status === 'CONFIRMED' ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20' : 'bg-amber-100 text-amber-600 dark:bg-amber-900/20' } `}>
                                                     {t.status === 'CONFIRMED' ? 'Confirmado' : 'Pendente'}
                                                 </span>
                                             </td>
@@ -170,14 +180,14 @@ const TransactionsPage: React.FC = () => {
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, type: 'INCOME' })}
-                                        className={`py-3 rounded-xl border-2 font-bold transition-all ${formData.type === 'INCOME' ? 'border-emerald-500 bg-emerald-50 text-emerald-600' : 'border-slate-100 text-slate-400'}`}
+                                        className={`py - 3 rounded - xl border - 2 font - bold transition - all ${ formData.type === 'INCOME' ? 'border-emerald-500 bg-emerald-50 text-emerald-600' : 'border-slate-100 text-slate-400' } `}
                                     >
                                         Receita
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, type: 'EXPENSE' })}
-                                        className={`py-3 rounded-xl border-2 font-bold transition-all ${formData.type === 'EXPENSE' ? 'border-rose-500 bg-rose-50 text-rose-600' : 'border-slate-100 text-slate-400'}`}
+                                        className={`py - 3 rounded - xl border - 2 font - bold transition - all ${ formData.type === 'EXPENSE' ? 'border-rose-500 bg-rose-50 text-rose-600' : 'border-slate-100 text-slate-400' } `}
                                     >
                                         Despesa
                                     </button>
@@ -241,6 +251,18 @@ const TransactionsPage: React.FC = () => {
                                             {categories.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
                                         </select>
                                     </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium mb-1">Pessoa / Contato (Opcional)</label>
+                                    <select
+                                        value={formData.personId}
+                                        onChange={(e) => setFormData({ ...formData, personId: e.target.value })}
+                                        className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-transparent outline-none focus:ring-2 focus:ring-primary-500"
+                                    >
+                                        <option value="">Nenhum...</option>
+                                        {people.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                                    </select>
                                 </div>
 
                                 <div className="flex space-x-4 pt-6">
