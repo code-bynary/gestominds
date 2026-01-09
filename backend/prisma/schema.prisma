@@ -1,0 +1,159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id        String   @id @default(uuid())
+  name      String
+  type      TenantType @default(PERSONAL) // PERSONAL (PF) or BUSINESS (PJ)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users        UserTenant[]
+  accounts     Account[]
+  categories   Category[]
+  transactions Transaction[]
+  costCenters  CostCenter[]
+  people       Person[]
+}
+
+enum TenantType {
+  PERSONAL
+  BUSINESS
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenants UserTenant[]
+}
+
+model UserTenant {
+  userId   String
+  tenantId String
+  role     Role     @default(OWNER)
+
+  user   User   @relation(fields: [userId], references: [id])
+  tenant Tenant @relation(fields: [tenantId], references: [id])
+
+  @@id([userId, tenantId])
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  USER
+}
+
+model Account {
+  id        String   @id @default(uuid())
+  name      String
+  bankName  String?
+  type      AccountType @default(CHECKING)
+  tenantId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+  transactions Transaction[]
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  INVESTMENT
+  CASH
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  type      TransactionType
+  parentId  String?
+  tenantId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parent       Category?     @relation("SubCategories", fields: [parentId], references: [id])
+  children     Category[]    @relation("SubCategories")
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+  transactions Transaction[]
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  description   String
+  amount        Decimal  @db.Decimal(15, 2)
+  date          DateTime
+  competenceDate DateTime
+  type          TransactionType
+  status        TransactionStatus @default(PENDING)
+  tenantId      String
+  accountId     String
+  categoryId    String
+  costCenterId  String?
+  personId      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  tenant     Tenant     @relation(fields: [tenantId], references: [id])
+  account    Account    @relation(fields: [accountId], references: [id])
+  category   Category   @relation(fields: [categoryId], references: [id])
+  costCenter CostCenter? @relation(fields: [costCenterId], references: [id])
+  person     Person?    @relation(fields: [personId], references: [id])
+}
+
+enum TransactionStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model CostCenter {
+  id        String   @id @default(uuid())
+  name      String
+  tenantId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+  transactions Transaction[]
+}
+
+model Person {
+  id        String   @id @default(uuid())
+  name      String
+  document  String?  // CPF/CNPJ
+  type      PersonType @default(OTHER)
+  tenantId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant       Tenant        @relation(fields: [tenantId], references: [id])
+  transactions Transaction[]
+}
+
+enum PersonType {
+  CLIENT
+  SUPPLIER
+  EMPLOYEE
+  OTHER
+}
