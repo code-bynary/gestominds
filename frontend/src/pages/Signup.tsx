@@ -3,7 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
 
-const LoginPage: React.FC = () => {
+const SignupPage: React.FC = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -14,11 +15,11 @@ const LoginPage: React.FC = () => {
         e.preventDefault();
         setError('');
         try {
-            const response = await api.post('/auth/login', { email, password });
+            const response = await api.post('/auth/register', { name, email, password });
             login(response.data);
             navigate('/');
         } catch (err: any) {
-            setError(err.response?.data?.error || 'Email ou senha inválidos');
+            setError(err.response?.data?.error || 'Erro ao criar conta');
         }
     };
 
@@ -26,8 +27,8 @@ const LoginPage: React.FC = () => {
         <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4">
             <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-xl">
                 <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold text-primary-600 dark:text-primary-400">Gestor Minds</h2>
-                    <p className="text-slate-500 mt-2">Bem-vindo de volta!</p>
+                    <h2 className="text-3xl font-bold text-primary-600 dark:text-primary-400">Criar Conta</h2>
+                    <p className="text-slate-500 mt-2">Comece a gerir suas finanças hoje!</p>
                 </div>
 
                 {error && (
@@ -38,9 +39,21 @@ const LoginPage: React.FC = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Nome Completo</label>
+                        <input
+                            type="text"
+                            required
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-primary-500 outline-none transition-all"
+                            placeholder="Digite seu nome"
+                        />
+                    </div>
+                    <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email</label>
                         <input
                             type="email"
+                            required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-primary-500 outline-none transition-all"
@@ -51,10 +64,11 @@ const LoginPage: React.FC = () => {
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Senha</label>
                         <input
                             type="password"
+                            required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-transparent focus:ring-2 focus:ring-primary-500 outline-none transition-all"
-                            placeholder="••••••••"
+                            placeholder="Mínimo 6 caracteres"
                         />
                     </div>
 
@@ -62,16 +76,16 @@ const LoginPage: React.FC = () => {
                         type="submit"
                         className="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white font-bold rounded-xl shadow-lg shadow-primary-500/30 transition-all active:scale-[0.98]"
                     >
-                        Entrar
+                        Criar Conta Grátis
                     </button>
                 </form>
 
                 <div className="mt-6 text-center text-sm text-slate-500">
-                    Não tem uma conta? <Link to="/signup" className="font-bold text-primary-600">Cadastre-se</Link>
+                    Já tem uma conta? <Link to="/login" className="font-bold text-primary-600">Entrar</Link>
                 </div>
             </div>
         </div>
     );
 };
 
-export default LoginPage;
+export default SignupPage;

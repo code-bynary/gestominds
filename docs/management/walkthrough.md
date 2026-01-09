@@ -27,10 +27,25 @@ gestor-minds/
     └── src/            # Componentes e UI
 ```
 
+### 3. Módulo de Autenticação (JWT + Multi-tenant) - COMPLETO
+- **Backend**:
+  - `AuthRepository`: Criação de usuário e tenant vinculado em uma transação.
+  - `AuthService`: Hashing de senha (bcrypt) e geração de tokens JWT.
+  - `AuthMiddleware`: Proteção de rotas e injeção do contexto de tenant.
+  - `RefreshController`: Lógica de renovação de tokens (Refresh Token) implementada.
+- **Frontend**:
+  - `AuthContext`: Gerenciamento de estado de login global integrado com Axios e LocalStorage.
+  - `api.ts`: Serviço de API com interceptor de tokens configurado.
+  - `LoginPage` & `SignupPage`: Interfaces premium conectadas à API real.
+  - `PrivateRoutes`: Proteção robusta das rotas internas.
+
+## Repositório Live
+- **Git** atualizado: `https://github.com/code-bynary/gestominds`
+
 ## Próximos Passos
-1. Implementar o sistema de Autenticação (JWT + Refresh Token).
-2. Criar os endpoints básicos de CRUD para Contas e Categorias.
-3. Conectar o Frontend com a API real.
+1. Iniciar o **CRUD de Contas Bancárias** (Backend + Frontend).
+2. Criar o seletor de Unidade/Empresa (Tenant Switcher) no Dashboard.
+3. Configurar o formulário de Lançamentos Rápidos.
 
 ---
 *Para rodar o front:* `cd frontend && npm run dev`

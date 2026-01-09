@@ -13,9 +13,12 @@
 - [x] Database Schema Design [x]
     - [x] Create Prisma schema with multi-tenancy (tenant_id)
     - [x] Define core models: User, Tenant, Account, Category, Transaction
-- [ ] Authentication System [ ]
-    - [ ] Implement JWT + Refresh Token logic
-    - [ ] Create Auth middleware
+- [x] Authentication System [x]
+    - [x] Implement User Registration (Signup)
+    - [x] Implement User Login (Sign-in)
+    - [x] JWT + Refresh Token logic
+    - [x] Backend Auth Middleware
+    - [x] Frontend Auth Context & Private Routes
 - [ ] Core Features (Phase 1) [ ]
     - [ ] Accounts management
     - [ ] Categories management (hierarchical)
