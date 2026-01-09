@@ -6,14 +6,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model Tenant {
   id        String   @id @default(uuid())
   name      String
-  type      TenantType @default(PERSONAL) // PERSONAL (PF) or BUSINESS (PJ)
+  type      String   @default("PERSONAL") // PERSONAL (PF) or BUSINESS (PJ)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -23,11 +23,6 @@ model Tenant {
   transactions Transaction[]
   costCenters  CostCenter[]
   people       Person[]
-}
-
-enum TenantType {
-  PERSONAL
-  BUSINESS
 }
 
 model User {
@@ -44,7 +39,7 @@ model User {
 model UserTenant {
   userId   String
   tenantId String
-  role     Role     @default(OWNER)
+  role     String     @default("OWNER") // OWNER, ADMIN, USER
 
   user   User   @relation(fields: [userId], references: [id])
   tenant Tenant @relation(fields: [tenantId], references: [id])
@@ -52,17 +47,11 @@ model UserTenant {
   @@id([userId, tenantId])
 }
 
-enum Role {
-  OWNER
-  ADMIN
-  USER
-}
-
 model Account {
   id        String   @id @default(uuid())
   name      String
   bankName  String?
-  type      AccountType @default(CHECKING)
+  type      String   @default("CHECKING") // CHECKING, SAVINGS, INVESTMENT, CASH
   tenantId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -71,17 +60,10 @@ model Account {
   transactions Transaction[]
 }
 
-enum AccountType {
-  CHECKING
-  SAVINGS
-  INVESTMENT
-  CASH
-}
-
 model Category {
   id        String   @id @default(uuid())
   name      String
-  type      TransactionType
+  type      String   // INCOME, EXPENSE
   parentId  String?
   tenantId  String
   createdAt DateTime @default(now())
@@ -93,24 +75,20 @@ model Category {
   transactions Transaction[]
 }
 
-enum TransactionType {
-  INCOME
-  EXPENSE
-}
-
 model Transaction {
   id            String   @id @default(uuid())
   description   String
-  amount        Decimal  @db.Decimal(15, 2)
+  amount        Float
   date          DateTime
   competenceDate DateTime
-  type          TransactionType
-  status        TransactionStatus @default(PENDING)
+  type          String   // INCOME, EXPENSE
+  status        String   @default("PENDING") // PENDING, CONFIRMED, CANCELLED
   tenantId      String
   accountId     String
   categoryId    String
   costCenterId  String?
   personId      String?
+  linkedTransactionId String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -119,12 +97,8 @@ model Transaction {
   category   Category   @relation(fields: [categoryId], references: [id])
   costCenter CostCenter? @relation(fields: [costCenterId], references: [id])
   person     Person?    @relation(fields: [personId], references: [id])
-}
-
-enum TransactionStatus {
-  PENDING
-  CONFIRMED
-  CANCELLED
+  linkedTransaction Transaction? @relation("TransferLink", fields: [linkedTransactionId], references: [id])
+  linkedFrom        Transaction[] @relation("TransferLink")
 }
 
 model CostCenter {
@@ -142,18 +116,11 @@ model Person {
   id        String   @id @default(uuid())
   name      String
   document  String?  // CPF/CNPJ
-  type      PersonType @default(OTHER)
+  type      String   @default("OTHER") // CLIENT, SUPPLIER, EMPLOYEE, OTHER
   tenantId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   tenant       Tenant        @relation(fields: [tenantId], references: [id])
   transactions Transaction[]
-}
-
-enum PersonType {
-  CLIENT
-  SUPPLIER
-  EMPLOYEE
-  OTHER
 }

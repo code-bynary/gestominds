@@ -76,6 +76,17 @@ gestor-minds/
   - **Integração**: Transações agora podem ser vinculadas a uma pessoa da lista.
   - Navegação lateral ativada.
 
+### 8. Transferências entre Contas - COMPLETO
+- **Backend**:
+  - `TransferRepository`: Implementação de transações atômicas para garantir que o dinheiro saia de uma conta e entre na outra simultaneamente.
+  - Vínculo entre lançamentos (`linkedTransactionId`).
+- **Frontend**:
+  - `TransferModal`: Interface dedicada para movimentação entre contas.
+  - Identificação visual de transferências na lista de lançamentos (ícone ⇄).
+- **Infraestrutura**:
+  - Migração para **SQLite** para facilitar o desenvolvimento local sem dependências externas.
+  - Configuração de `.env` automatizada para o ambiente de dev.
+
 ## Repositório Live
 - **Git** atualizado: `https://github.com/code-bynary/gestominds`
 

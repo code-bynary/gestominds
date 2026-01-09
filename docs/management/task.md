@@ -33,6 +33,9 @@
     - [x] People management (Clients & Suppliers) [x]
         - [x] Backend CRUD for People
         - [x] Frontend management UI
+    - [x] Transfers (Between own accounts) [x]
+        - [x] Backend logic for dual transactions
+        - [x] Frontend transfer modal
     - [ ] Balance calculation logic
 - [ ] Initial UI Implementation [ ]
     - [ ] Basic Layout and Navigation
