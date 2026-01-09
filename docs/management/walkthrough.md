@@ -93,6 +93,12 @@ gestor-minds/
 - **Visualização de Dados**: Integração com a biblioteca `Recharts` para exibir o fluxo de caixa dos últimos 6 meses.
 - **Gráficos**: Inclui gráfico de área para tendências e gráfico de barras para comparativo mensal.
 
+### 10. Relatórios e Exportação - COMPLETO
+- **Exportação Excel**: Geração de planilhas `.xlsx` detalhadas com todos os lançamentos, categorias e contas usando `exceljs`.
+- **Exportação PDF**: Geração de documentos `.pdf` formatados para impressão usando `pdfmake`.
+- **Interface de Download**: Botões de exportação integrados diretamente na barra de ferramentas da tela de Lançamentos.
+- **Filtros Automatizados**: A exportação respeita o contexto multi-tenant do usuário logado.
+
 ## Repositório Live
 - **Git** atualizado: `https://github.com/code-bynary/gestominds`
 

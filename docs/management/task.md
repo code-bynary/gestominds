@@ -40,7 +40,11 @@
     - [x] Backend metrics API (total balance, monthly flow)
     - [x] Dynamic summary cards (Income, Expense, Balance)
     - [x] Interactive charts (Monthly comparison)
+- [x] Reports and Exports [x]
+    - [x] Backend Excel generation logic (xlsx)
+    - [x] Backend PDF generation logic (pdfmake/jspdf)
+    - [x] Frontend export interface (Download buttons)
 - [ ] Initial UI Implementation [x]
     - [x] Basic Layout and Navigation
     - [x] Account and Category listings
-    - [ ] Dashboard shell (Converting to functional)
+    - [x] Dashboard shell (Functional)

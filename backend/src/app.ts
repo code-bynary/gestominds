@@ -8,6 +8,7 @@ import categoryRoutes from './routes/category.routes';
 import transactionRoutes from './routes/transaction.routes';
 import dashboardRoutes from './routes/dashboard.routes';
 import personRoutes from './routes/person.routes';
+import reportRoutes from './routes/report.routes';
 import transferRoutes from './routes/transfer.routes';
 
 dotenv.config();
@@ -29,6 +30,7 @@ app.use('/dashboard', dashboardRoutes);
 app.use('/accounts', accountRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/transactions', transactionRoutes);
+app.use('/reports', reportRoutes);
 app.use('/people', personRoutes);
 app.use('/transfers', transferRoutes);
 

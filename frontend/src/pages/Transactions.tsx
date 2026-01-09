@@ -129,6 +129,23 @@ const TransactionsPage: React.FC = () => {
         }
     };
 
+    const handleExport = async (format: 'excel' | 'pdf') => {
+        try {
+            const response = await api.get(`/reports/${format}`, {
+                responseType: 'blob'
+            });
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `lancamentos.${format === 'excel' ? 'xlsx' : 'pdf'}`);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (err) {
+            console.error(`Erro ao exportar ${format}:`, err);
+        }
+    };
+
     const formatCurrency = (value: number) => {
         return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
     };
@@ -136,12 +153,26 @@ const TransactionsPage: React.FC = () => {
     return (
         <Layout>
             <div className="max-w-7xl mx-auto">
-                <header className="flex justify-between items-center mb-8">
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
                         <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Lançamentos</h2>
                         <p className="text-slate-500 mt-2">Controle suas entradas e saídas.</p>
                     </div>
-                    <div className="flex space-x-3">
+                    <div className="flex flex-wrap gap-3">
+                        <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-2xl mr-2">
+                            <button
+                                onClick={() => handleExport('excel')}
+                                className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-white dark:hover:bg-slate-700 rounded-xl transition-all flex items-center"
+                            >
+                                <span className="mr-2">📊</span> Excel
+                            </button>
+                            <button
+                                onClick={() => handleExport('pdf')}
+                                className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-white dark:hover:bg-slate-700 rounded-xl transition-all flex items-center"
+                            >
+                                <span className="mr-2">📄</span> PDF
+                            </button>
+                        </div>
                         <button
                             onClick={() => setIsTransferModalOpen(true)}
                             className="px-6 py-3 border-2 border-primary-100 text-primary-600 dark:border-primary-900/30 dark:text-primary-400 font-bold rounded-2xl hover:bg-primary-50 dark:hover:bg-primary-900/10 transition-all active:scale-95 text-sm sm:text-base flex items-center"
