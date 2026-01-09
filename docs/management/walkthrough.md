@@ -57,6 +57,16 @@ gestor-minds/
   - Suporte a subcategorias infinitas (exibição recursiva).
   - Modal dinâmico para criação rápida.
 
+### 6. Lançamentos (Transações) - COMPLETO
+- **Backend**:
+  - `TransactionRepository`: Registro detalhado de movimentos financeiros.
+  - Controle de status (Pendente / Confirmado).
+  - Listagem com filtros por data.
+- **Frontend**:
+  - `TransactionsPage`: Tabela detalhada com indicadores de cor (Verde/Vermelho).
+  - Formulário unificado para Receitas e Despesas.
+  - Integração com Contas e Categorias reais.
+
 ## Repositório Live
 - **Git** atualizado: `https://github.com/code-bynary/gestominds`
 

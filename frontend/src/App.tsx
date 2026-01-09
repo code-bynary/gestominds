@@ -4,6 +4,7 @@ import LoginPage from './pages/Login';
 import SignupPage from './pages/Signup';
 import AccountsPage from './pages/Accounts';
 import CategoriesPage from './pages/Categories';
+import TransactionsPage from './pages/Transactions';
 import Layout from './components/Layout';
 
 function Dashboard() {
@@ -84,6 +85,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/accounts" element={<PrivateRoute><AccountsPage /></PrivateRoute>} />
           <Route path="/categories" element={<PrivateRoute><CategoriesPage /></PrivateRoute>} />
+          <Route path="/transactions" element={<PrivateRoute><TransactionsPage /></PrivateRoute>} />
           <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

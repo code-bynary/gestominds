@@ -13,6 +13,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const menuItems = [
     { icon: '🏠', label: 'Dashboard', path: '/' },
+    { icon: '💸', label: 'Lançamentos', path: '/transactions' },
     { icon: '🏦', label: 'Contas', path: '/accounts' },
     { icon: '📁', label: 'Categorias', path: '/categories' },
     { icon: '📊', label: 'Relatórios', path: '#' },
@@ -86,8 +87,8 @@ const NavItem = ({ icon, label, path, active = false }: { icon: string, label: s
   <Link
     to={path}
     className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${active
-        ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 font-medium'
-        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+      ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 font-medium'
+      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
       }`}
   >
     <span>{icon}</span>

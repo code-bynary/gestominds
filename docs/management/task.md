@@ -26,7 +26,10 @@
     - [x] Categories management (hierarchical) [x]
         - [x] Backend CRUD with hierarchy support
         - [x] Frontend management UI
-    - [ ] Transactions (Manual entries, transfers)
+    - [x] Transactions (Manual entries, transfers) [x]
+        - [x] Backend CRUD with persistence and status (Pending/Confirmed)
+        - [x] Frontend transaction listing
+        - [x] Quick transaction creation form
     - [ ] Balance calculation logic
 - [ ] Initial UI Implementation [ ]
     - [ ] Basic Layout and Navigation
