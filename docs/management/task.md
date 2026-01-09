@@ -36,8 +36,11 @@
     - [x] Transfers (Between own accounts) [x]
         - [x] Backend logic for dual transactions
         - [x] Frontend transfer modal
-    - [ ] Balance calculation logic
-- [ ] Initial UI Implementation [ ]
-    - [ ] Basic Layout and Navigation
-    - [ ] Account and Category listings
-    - [ ] Dashboard shell
+- [x] Functional Dashboard [x]
+    - [x] Backend metrics API (total balance, monthly flow)
+    - [x] Dynamic summary cards (Income, Expense, Balance)
+    - [x] Interactive charts (Monthly comparison)
+- [ ] Initial UI Implementation [x]
+    - [x] Basic Layout and Navigation
+    - [x] Account and Category listings
+    - [ ] Dashboard shell (Converting to functional)

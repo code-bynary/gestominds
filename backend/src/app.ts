@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.routes';
 import accountRoutes from './routes/account.routes';
 import categoryRoutes from './routes/category.routes';
 import transactionRoutes from './routes/transaction.routes';
+import dashboardRoutes from './routes/dashboard.routes';
 import personRoutes from './routes/person.routes';
 import transferRoutes from './routes/transfer.routes';
 
@@ -24,6 +25,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/dashboard', dashboardRoutes);
 app.use('/accounts', accountRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/transactions', transactionRoutes);

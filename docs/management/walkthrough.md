@@ -87,6 +87,12 @@ gestor-minds/
   - Migração para **SQLite** para facilitar o desenvolvimento local sem dependências externas.
   - Configuração de `.env` automatizada para o ambiente de dev.
 
+### 9. Dashboard Funcional - COMPLETO
+- **Cálculos em Tempo Real**: O backend agora agrega todos os lançamentos confirmados para exibir o saldo real do patrimônio.
+- **KPIs Dinâmicos**: Cards de Receita Mensal, Despesa Mensal e Saldo Total atualizados instantaneamente.
+- **Visualização de Dados**: Integração com a biblioteca `Recharts` para exibir o fluxo de caixa dos últimos 6 meses.
+- **Gráficos**: Inclui gráfico de área para tendências e gráfico de barras para comparativo mensal.
+
 ## Repositório Live
 - **Git** atualizado: `https://github.com/code-bynary/gestominds`
 
