@@ -23,7 +23,9 @@
     - [x] Accounts management (Backend & Frontend)
         - [x] Backend CRUD implementation
         - [x] Frontend UI (listing and form)
-    - [ ] Categories management (hierarchical)
+    - [x] Categories management (hierarchical) [x]
+        - [x] Backend CRUD with hierarchy support
+        - [x] Frontend management UI
     - [ ] Transactions (Manual entries, transfers)
     - [ ] Balance calculation logic
 - [ ] Initial UI Implementation [ ]

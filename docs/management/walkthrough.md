@@ -48,6 +48,15 @@ gestor-minds/
   - Modal de criação de conta com seleção de tipo (Corrente, Poupança, etc.).
   - Integração visual com o layout mestre e sidebar.
 
+### 5. Categorias Hierárquicas - COMPLETO
+- **Backend**:
+  - `CategoryRepository`: Suporte a árvore de categorias (com `parentId`).
+  - Endpoints para criar categorias e subcategorias de Receita ou Despesa.
+- **Frontend**:
+  - `CategoriesPage`: Interface intuitiva que separa Receitas de Despesas.
+  - Suporte a subcategorias infinitas (exibição recursiva).
+  - Modal dinâmico para criação rápida.
+
 ## Repositório Live
 - **Git** atualizado: `https://github.com/code-bynary/gestominds`
 

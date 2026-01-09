@@ -1,4 +1,3 @@
-```
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -15,34 +14,34 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const menuItems = [
     { icon: '🏠', label: 'Dashboard', path: '/' },
     { icon: '🏦', label: 'Contas', path: '/accounts' },
-    { icon: '📁', label: 'Categorias', path: '#' },
+    { icon: '📁', label: 'Categorias', path: '/categories' },
     { icon: '📊', label: 'Relatórios', path: '#' },
   ];
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex">
       {/* Sidebar */}
-      <aside className={`bg - white dark: bg - slate - 900 border - r border - slate - 200 dark: border - slate - 800 w - 64 transition - all duration - 300 ${ isSidebarOpen ? 'translate-x-0' : '-translate-x-64' } `}>
+      <aside className={`bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 w-64 transition-all duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-64'}`}>
         <div className="p-6">
           <h1 className="text-2xl font-bold text-primary-600 dark:text-primary-400">Gestor Minds</h1>
         </div>
 
         <nav className="mt-6 px-4 space-y-1">
           {menuItems.map((item) => (
-            <NavItem 
+            <NavItem
               key={item.path}
-              icon={item.icon} 
-              label={item.label} 
+              icon={item.icon}
+              label={item.label}
               path={item.path}
-              active={pathname === item.path} 
+              active={pathname === item.path}
             />
           ))}
-          
+
           <div className="pt-4 pb-2 text-xs font-semibold text-slate-400 uppercase">Configurações</div>
           <NavItem icon="👤" label="Perfil" path="#" />
           <NavItem icon="🏢" label="Unidades" path="#" />
-          
-          <button 
+
+          <button
             onClick={logout}
             className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-rose-50 dark:hover:bg-rose-900/10 hover:text-rose-600 transition-all mt-8"
           >
@@ -60,7 +59,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
           >
-            ☰
+            {isSidebarOpen ? '◀' : '☰'}
           </button>
 
           <div className="flex items-center space-x-4">
@@ -84,13 +83,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 };
 
 const NavItem = ({ icon, label, path, active = false }: { icon: string, label: string, path: string, active?: boolean }) => (
-  <Link 
-    to={path} 
-    className={`flex items - center space - x - 3 px - 4 py - 3 rounded - xl transition - all ${
-    active
+  <Link
+    to={path}
+    className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${active
         ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 font-medium'
         : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
-} `}
+      }`}
   >
     <span>{icon}</span>
     <span>{label}</span>
@@ -98,4 +96,3 @@ const NavItem = ({ icon, label, path, active = false }: { icon: string, label: s
 );
 
 export default Layout;
-```
